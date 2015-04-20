@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Experiments - Pulse</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <section id="stage">
+      <div class="pulse"></div>
+      <div class="pulse"></div>
+      <div class="pulse"></div>
+      <div class="pulse"></div>
+      <div class="pulse"></div>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+    <script>
+    var $els = $('.pulse');
+    var STEP_CHANGE = .025;
+
+    function render() {
+      $els.each(function() {
+
+        var $current = $(this);
+        var previousValue = parseFloat($current.css('opacity')) || 1;
+        var direction = $current.data('direction');
+
+        if (!direction && previousValue < .4) {
+          direction = true;
+          $current.data('direction', direction);
+        } else if (direction && previousValue >= .8) {
+          direction = false;
+          $current.data('direction', direction);
+        }
+
+        var randomChange = STEP_CHANGE * Math.random();
+        var newValue = direction ? previousValue + randomChange : previousValue - randomChange;
+        $current.css('opacity', newValue);
+      });
+
+      window.requestAnimationFrame(render);
+    };
+
+    window.requestAnimationFrame(render);
+    </script>
+
+    <style>
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: rgba(250, 248, 246, 1);
+    }
+
+    .stage {
+      height: 100%;
+      width: 100%;
+    }
+    .pulse {
+      text-align: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(155, 230, 234, 1) 0%, transparent 50%);
+      width: 500px;
+      height: 500px;
+      opacity: .25;
+      left: -50px;
+      top: -50px;
+      position: absolute;
+    }
+    .pulse:nth-child(1) {
+      left: 50px;
+      top: 50px;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(243, 155, 174, .7) 0%, transparent 50%);
+    }
+    .pulse:nth-child(2) {
+      left: 50px;
+      top: -50px;
+      opacity: .65;
+      background: radial-gradient(circle, rgba(250, 228, 137, 1) 0%, transparent 50%);
+    }
+    .pulse:nth-child(3) {
+      left: -50px;
+      top: 50px;
+      opacity: .75;
+      background: radial-gradient(circle, rgba(223, 196, 240, 1) 0%, transparent 50%);
+    }
+    .pulse:nth-child(4) {
+      left: 0px;
+      top: 0px;
+      opacity: 1;
+      background: radial-gradient(circle, rgba(136, 232, 166, .6) 0%, transparent 50%);
+      -webkit-transform: scale(.7);
+      transform: scale(.7);
+    }
+    </style>
+  </body>
+</html>
