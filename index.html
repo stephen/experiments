@@ -15,30 +15,31 @@
       <div class="pulse"></div>
       <div class="pulse"></div>
     </section>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
     <script>
-    var $els = $('.pulse');
+
+    var pulses = document.querySelectorAll('.pulse');
     var STEP_CHANGE = .025;
 
     function render() {
-      $els.each(function() {
+      Array.prototype.forEach.call(pulses, function(current) {
 
-        var $current = $(this);
-        var previousValue = parseFloat($current.css('opacity')) || 1;
-        var direction = $current.data('direction');
+        var currentStyle = window.getComputedStyle(current, null);
+
+        var previousValue = parseFloat(currentStyle.opacity) || 1;
+        var direction = JSON.parse(current.getAttribute('data-direction')); // attributes are strings
 
         if (!direction && previousValue < .4) {
           direction = true;
-          $current.data('direction', direction);
+          current.setAttribute('data-direction', direction);
         } else if (direction && previousValue >= .8) {
           direction = false;
-          $current.data('direction', direction);
+          current.setAttribute('data-direction', direction);
         }
 
         var randomChange = STEP_CHANGE * Math.random();
         var newValue = direction ? previousValue + randomChange : previousValue - randomChange;
-        $current.css('opacity', newValue);
+        current.style.opacity = newValue;
       });
 
       window.requestAnimationFrame(render);
