@@ -21,31 +21,54 @@
     var pulses = document.querySelectorAll('.pulse');
     var STEP_CHANGE = .025;
 
-    function render() {
-      Array.prototype.forEach.call(pulses, function(current) {
+    var pulseData = null;
 
+    function setup() {
+      pulseData = Array.prototype.map.call(pulses, function(current) {
         var currentStyle = window.getComputedStyle(current, null);
 
-        var previousValue = parseFloat(currentStyle.opacity) || 1;
-        var direction = JSON.parse(current.getAttribute('data-direction')); // attributes are strings
+        return {
+          opacity: parseFloat(currentStyle.opacity),
+          direction: false
+        };
+      });
+    }
 
-        if (!direction && previousValue < .4) {
-          direction = true;
-          current.setAttribute('data-direction', direction);
-        } else if (direction && previousValue >= .8) {
-          direction = false;
-          current.setAttribute('data-direction', direction);
+    function update() {
+
+      pulseData.forEach(function(current) {
+
+        var previousOpacity = current.opacity;
+        var previousDirection = current.direction;
+
+        if (!previousDirection && previousOpacity < .4 || previousDirection && previousOpacity >= .8) {
+          current.direction = !previousDirection;
         }
 
         var randomChange = STEP_CHANGE * Math.random();
-        var newValue = direction ? previousValue + randomChange : previousValue - randomChange;
-        current.style.opacity = newValue;
+        current.opacity = previousDirection ? previousOpacity + randomChange : previousOpacity - randomChange;
       });
 
-      window.requestAnimationFrame(render);
     }
 
-    window.requestAnimationFrame(render);
+    function render() {
+      Array.prototype.forEach.call(pulses, function(current, i) {
+        current.style.opacity = pulseData[i].opacity;
+      });
+    }
+
+    setInterval(update, 50);
+
+    function animationLoop() {
+
+      //update();
+      render();
+
+      window.requestAnimationFrame(animationLoop);
+    }
+
+    setup();
+    window.requestAnimationFrame(animationLoop);
     </script>
 
     <style>
