@@ -5,30 +5,27 @@ require("./main.css");
 module.exports = () => {
   const actions = [
     {
-      key: 'a',
-      label: 'mrh',
-    },
-    {
-      key: 'b',
+      key: 'bawk',
       label: 'bawk',
+      modifier: 'green',
     },
     {
-      key: 'c',
-      label: 'womp',
+      key: 'hurk',
+      label: 'hurk',
+      modifier: 'red',
     },
     {
-      key: 'd',
+      key: 'hrm',
+      label: 'hrm',
+      modifier: 'yellow',
+    },
+    {
+      key: 'mrh',
       label: 'mrh',
-    },
-    {
-      key: 'e',
-      label: 'bawk',
-    },
-    {
-      key: 'f',
-      label: 'womp',
+      modifier: 'purple',
     },
   ];
+
   return (
     <div>
       <ActionDropdown actions={ actions } />
