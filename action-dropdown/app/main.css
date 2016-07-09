@@ -1,0 +1,54 @@
+html, body {
+  font-size: 13px;
+}
+
+.Application {
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  padding-top: 10rem;
+}
+
+.ActionDropdown {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ActionDropdown-action {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  cursor: pointer;
+  user-select: none;
+
+  color: white;
+}
+
+.ActionDropdown-action:nth-child(1) {
+  background-color: #795f99;
+}
+
+.ActionDropdown-action:nth-child(2) {
+  background-color: #ffb424;
+}
+
+.ActionDropdown-action:nth-child(3) {
+  background-color: #e65134;
+}
+
+.ActionDropdown-action:nth-child(4) {
+  background-color: #14a67b;
+}
